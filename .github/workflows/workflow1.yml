@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
       - name: Install Nodejs
         uses: actions/setup-node@v3
         with:
@@ -16,10 +16,11 @@ jobs:
         run: npm lint
 
   test:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
       - name: Install Nodejs
         uses: actions/setup-node@v3
         with:
@@ -30,10 +31,11 @@ jobs:
         run: npm test
 
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
-        uses: action/checkout@v3
+        uses: actions/checkout@v3
       - name: Install Nodejs
         uses: actions/setup-node@v3
         with:
@@ -44,6 +46,7 @@ jobs:
         run: npm build
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Deploy 
